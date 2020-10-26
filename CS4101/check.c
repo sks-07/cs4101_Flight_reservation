@@ -41,7 +41,7 @@ main() {
 
 
    fclose(fp);
-
+    printf("for checking purpose");
 
 
 
