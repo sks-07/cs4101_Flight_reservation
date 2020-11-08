@@ -1,0 +1,42 @@
+
+
+ Day of operation: 0-sun,1-mon,2-tue,3-wed,4-thur,5-fri,6-sat
+
+======================================================================================
+
+ID              Name            Source          Destination             Day of operation
+
+
+111             AI501           DEL             KOL                     1 4 5
+
+112             AI502           DEL             MUM                     1 3 5
+
+113             AI503           DEL             BBS                     2 5 6
+
+114             IN401           KOL             MUM                     2 3 4
+
+115             IN402           KOL             BBS                     1 5 6
+
+116             IN403           KOL             DEL                     2 3 4
+
+117             ET301           MUM             KOL                     1 4 5
+
+118             ET302           MUM             DEL                     2 3 6
+
+119             ET303           MUM             BBS                     2 3 4
+
+120             QT201           BBS             DEL                     1 5 6
+
+121             QT202           BBS             MUM                     1 3 6
+
+122             QT203           BBS             KOL                     2 4 5
+
+123             AI504           DEL             GOA                     0 2 4
+
+124             IN404           KOL             GOA                     0 4 6
+
+125             ET304           MUM             GOA                     0 1 3
+
+126             QT204           BBS             GOA                     0 5 6
+
+=======================================================================================
