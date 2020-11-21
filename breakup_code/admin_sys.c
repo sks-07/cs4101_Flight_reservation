@@ -49,7 +49,7 @@ int admin_sys()
 
                 clrscr();color_change(4);
                 printf("\t\t\tLogin as Admin\n\n");
-                printf("==================");color_change(2);printf("Flight info System");color_change(4);printf("=============\n\n");
+                printf("==========================");color_change(2);printf("Flight info System");color_change(4);printf("===========================\n\n");
                 color_change(3);
                 printf("1. Add data\n\n");
                 printf("2. Modify\n\n");
@@ -59,7 +59,7 @@ int admin_sys()
                 printf("6. Search\n\n");
                 printf("0. Exit\n\n");
                 color_change(4);
-                printf("========================================================\n\n");color_change(6);
+                printf("=========================================================================\n\n");color_change(6);
 
                 printf("\nPlease enter your Choice:");color_change(7);
                 scanf("%d",&ch);
@@ -496,9 +496,9 @@ void search()
             printf("%s\t",t.source);
             printf("%s\t\t",t.destination);
             for(int i=0;i<3;i++)
-                printf("%d\n\n",t.date[i]);
+                printf("%d ",t.date[i]);
             color_change(4);    
-            printf("===========================================================================\n\n");color_change(7);
+            printf("\n===========================================================================\n\n");color_change(7);
             found=1;
         }
     }
