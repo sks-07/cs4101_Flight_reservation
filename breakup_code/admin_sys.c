@@ -612,10 +612,12 @@ struct flags login()
    
       int checku=0;
       int checkp=0;
-      fp=fopen("Web_user.txt","r");
       
     do
     {
+	clrscr();
+        logo();
+        fp=fopen("Web_user.txt","r");
         color_change(2);
         printf("\n\n\t\t\t\tWELCOME TO LOGIN ZONE");
         color_change(4);
@@ -676,7 +678,9 @@ struct flags login()
            else
            printf("\n\n\t\t\tThank you for visiting our website. Have a good day\n");*/
            break;
-          } 
+          }
+	   fclose(fp);
+
          } while (f.adminf==0 && f.userf==0); 	
       
         return f;
