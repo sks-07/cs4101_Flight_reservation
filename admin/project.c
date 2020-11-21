@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include<math.h>
-#include<time.h>
-#include<termios.h>
+#include <math.h>
+#include <time.h>
+#include <termios.h>
 #include <unistd.h> 
 
 
@@ -481,13 +481,11 @@ void search()
 
             printf("%s\t",t.name);
             printf("%s\t",t.source);
-            printf("%s\t\t",t.destination);int i=0;
-            for(i;i<3;i++)
-            printf("%d ",t.date[i]);
+            printf("%s\t\t",t.destination);
+            for(int i=0;i<3;i++)
+                printf("%d ",t.date[i]);
 
-            printf("\n\n");
-
-            printf("===========================================================================\n\n");
+            printf("\n\n===========================================================================\n\n");
             found=1;
         }
     }
@@ -757,10 +755,6 @@ void reg()
         	printf("\e[1;1H\e[2J");
         	goto AB;
           }
-
-  
-     
-	
   }
 
 
@@ -793,19 +787,19 @@ int login()
           checkp=strcmp(pw,w1.pass);
           char admin_pass[]="root";
           char admin_u[]="admin";
-          if(strcmp(admin_u,w1.name)==0 && strcmp(admin_pass,w1.pass)==0)
+        if(strcmp(admin_u,name)==0 && strcmp(admin_pass,pw)==0)
           {
               admin=1;
               printf("\nYOU HAVE LOGGED IN SUCCESSFULLY as admin\n");
           }
-          if(checku==0&&checkp==0)
+        if(checku==0&&checkp==0)
           {
             printf("\e[1;1H\e[2J"); 
             printf("\n\n\n\t\t\tYOU HAVE LOGGED IN SUCCESSFULLY!!");
             printf("\n\n\n\t\t\t\tWELCOME, HAVE A NICE DAY\n");
             break;
           }
-       else if(checku==0&&checkp!=0)
+        else if(checku==0&&checkp!=0)
           {
             printf("\n\n\n\t\t\tWRONG PASSWORD!! Not %s??",name);
             printf("\n\n\t\t\t\t  (Press '1' to re-login)");
