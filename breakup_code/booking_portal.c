@@ -40,7 +40,7 @@ void booking(float total_payment)
 	scanf("%d", &choice);
 
     // Sitch choice for card or banking portal
-    switch (choice) { E
+    switch (choice) {
     // Enter details for card
     case 0:
 		check_valid_choice = 1;

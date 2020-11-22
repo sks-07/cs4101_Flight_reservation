@@ -396,7 +396,7 @@ void update_data()//This function is used to update a particular flight record
 		//make found =1 such that we know that we found the record
             found=1;color_change(3);
 		//asking user to provide new information to upadte
-            printf("\nEnter Fligth ID:");color_change(7);
+            printf("\nEnter Flight ID:");color_change(7);
             scanf("%d",&t.id);
 
             //fflush(stdin);
@@ -538,6 +538,8 @@ void del()
     }//close both the files
     fclose(fp);
     fclose(fp1);
+    printf("Flight ID %d has been deleted. Press any key to continue...",id);
+    mygetch();
 }
 
 
