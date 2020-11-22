@@ -9,10 +9,6 @@
 #endif
 
 struct passenger_info passenger[5];
-//Function to calculate fare based on age and the distance dependent fare of the flight.
-//The variable c takes the values 0 and 1, corresponding to whether student concession is applicable or not
-//Total fare consists of four parts-base fare, flight's distance dependent fare, student concession and taxes (10%)
-//Base fare is calculated based on age of the passenger
 
 void booking(float total_payment)
 {
@@ -83,6 +79,10 @@ void booking(float total_payment)
 
 
 
+//Function to calculate fare based on age and the distance dependent fare of the flight.
+//The variable c takes the values 0 and 1, corresponding to whether student concession is applicable or not
+//Total fare consists of four parts-base fare, flight's distance dependent fare, student concession and taxes (10%)
+//Base fare is calculated based on age of the passenger
 
 float fare_calculator(int age, float distance_fare, int c)	//Harshit Kumar 
 {
