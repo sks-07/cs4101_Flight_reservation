@@ -31,11 +31,12 @@ void logo();//to print logo
 */
 int admin_sys()
 {	
-    clrscr();
-    logo();
+    
     int user; int selection_flag=0;//intialize selection_flag
     while(selection_flag==0)
     {
+	    clrscr();
+   	    logo();
         printf("\n\n\t\t\t\tWelcome to MakeMyTrip\n");
         //mygetch();
     color_change(5);printf("\n\t\t\t\t1");color_change(3);printf(" : Admin");color_change(5);printf(" \t\t2");color_change(3);printf(" : User");
@@ -632,6 +633,7 @@ void reg()
           {
             color_change(4); 
             printf("\n\n\t\t\t\tUSERNAME ALREDY EXISTS\n\n");color_change(7); 
+            printf("\nPress enter to continue....");mygetch();
             valid_username = 0; //Username not unique, hence code does not go to the next part
             break;
           }
@@ -652,16 +654,7 @@ void reg()
             //fseek( fp, -l, SEEK_CUR );
             //fread(&w2,sizeof(w2),1,fp);
             color_change(6);
-            /*
-            printf("\n\n\t\t\t\tDo you wanna recheck you password?\n\n");
-            printf("\t\t\t\t\t> PRESS 1 FOR YES\n\n\t\t\t\t\t> PRESS 2 FOR NO\n\n\t\t\t\t");color_change(7);
-            scanf("%d",&n);
-            if (n==1)
-            {
-                printf("\n\n\t\t\t\t");
-                printf("%s",w.pass);//printf("%s",password);
-            }
-            */
+            
             fclose(fp);
 
                 
@@ -670,28 +663,7 @@ void reg()
     };
     printf("\n\n\t\t\t\tGoing back to Login Portal"); color_change(7);  
 	 printf("\n====================================================================================");
-        /*
-        printf("\n\n\t\tTry login to your account??\n\n\t\t  ");
-        
-        AB:
-        printf("> PRESS 1 FOR YES\n\n\t\t  > PRESS 2 FOR NO\n\n\t\t\t\t");
-        scanf("%d",&n);
-        printf("\e[1;1H\e[2J"); 
-        switch(n)
-          {
-              case 1: printf("\e[1;1H\e[2J");
-                    f3=login();
-                    break;
-              case 2: printf("\e[1;1H\e[2J"); 
-                    printf("\n\n\n\t\tTHANK YOU FOR REGISTERING\n");
-                    break;
-              default: printf("\n\n\t\t\t\tNO MATCH FOUND");
-        	printf("\n\n\t\t\tPress Enter to re-Enter the choice\n\n\t\t");
-        	if(gets()==13)
-        	printf("\e[1;1H\e[2J");
-        	goto AB;
-          }
-        */
+       
 
   
      
@@ -778,15 +750,7 @@ struct flags login()
           {color_change(6);
            printf("\n\n\n\t\t\tYou are not a Registered User\n \t\t\t");color_change(7);
 	    printf("\n====================================================================================");
-           /*printf("\n\n\n\t\t\tDo you want to register?\n \t\t\t");
-           printf("\n\n\n\tPress 1 to register, Press 2 to try login again, Press anything else to skip\n");
-           scanf("%d",&n);
-           if(n==1)
-           reg();
-           else if(n==2)
-           login();
-           else
-           printf("\n\n\t\t\tThank you for visiting our website. Have a good day\n");*/
+          
            break;
           }
 	   fclose(fp);//file is closed
