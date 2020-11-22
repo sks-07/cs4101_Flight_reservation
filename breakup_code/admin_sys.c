@@ -206,6 +206,13 @@ int admin_sys()
     return 0;
 }
 
+/*
+	    data is added to a text file using file pointer fp.
+            file is open in mode "a"(Opens a text file for writing in appending mode.
+             If it does not exist, then a new file is created. Here your program will 
+             start appending content in the existing file content.) 
+            with file open writing new flight information at the end of the file.
+*/
 void add_data()
 {
     //declaring a file pointer which will run through the file
@@ -246,6 +253,13 @@ int day_of_week(int d,int m,int y)
 
 
 //this function is used to display the flight records on a given date
+/*          file is open in mode "r"(Reading mode)
+            The file pointer will move through the entire file untill it reaches the EOF.
+            at every iterartion we read a strurture from the file 
+            and each strutured represent different flight information.
+            and then we check that if date provided by user match with date of operation 
+            of the flight then we display all such available filght on that specific date.
+*/
 void display_all_date_wise()
 {
     int d,m,y=2020;//declaring day and month and intializing year =2020  
@@ -297,6 +311,11 @@ void display_all_date_wise()
 
 void display_all()
 {
+	/*
+	    file is open in mode "r"(Reading mode)
+            The file pointer will move through the entire file untill it reaches the EOF.
+            at every iterartion we read a strurture from the file and displayings all information of the flight.
+	*/
 //Declaring a file pointer
 FILE *fp;
 struct Flight t;//declaring a flight structure which is used to read flight records from the text file
@@ -332,30 +351,51 @@ fclose(fp);//closing the file
 }
 
 
-void update_data()
+void update_data()//This function is used to update a particular flight record
 {
+	/*
+	Main file is open in reading mode and a temperary file is open in 
+            wirting mode.user is asked which Flight data you want to modify w.r.t flight id
+            and that particular id is taken as input from the user.
+            The file pointer will move through the entire file untill it reaches the EOF.
+            and we maintain a variable "found" 
+           *at every iterartion a condition is check i.e that flight id matches with id provided by the user
+            if the condition is true then new information is asked from the user and then
+            we write the strurture in the temperary file and found is equal to 1 ,otherwise if the conidtion is false we 
+            simply write the strurture to the temperary file.
+
+           *if found is equal to zero thendisplay the message that record with that id is not found 
+           else again open main file in writing mode and temperary file in reading mode
+           now copy everything from temperary and write it in main file.
+           hence at the end we have updated main file;
+
+	*/
+   //Declaring two file pointer one for the main file and otther for the temporary file
     FILE *fp,*fp1;
-    struct Flight t,t1;
+    struct Flight t,t1;//declaring two structure valraible one for the main file and otther for the temporary file
+    //maintaining some variable 	
     int id,found=0,count=0;
     char val[2];
 
-    fp=fopen(fname,"r");
-    fp1=fopen("temp.txt","w");
+    fp=fopen(fname,"r");//opening main file in reading mode 
+    fp1=fopen("temp.txt","w");//opeining temporary file writing mode
     color_change(3);
-    printf("\nEnter the Flight ID you want to Modify:");color_change(7);
+    printf("\nEnter the Flight ID you want to Modify:");color_change(7);//asking user which flight record w.r.t to id he/she want to delete.
     scanf("%d",&id);
 
-    while(1)
+    while(1)//loop wil run until it reach end of the file
     {
-        fread(&t,sizeof(t),1,fp);
+        fread(&t,sizeof(t),1,fp);// At every iteration a flight record is read from the main file
 
         if(feof(fp))
         {
-            break;
+            break;//if it reach  end of the file then come out from the loop
         }
-        if(t.id==id)
+        if(t.id==id)//if the id provided by the user matches with the id in flight record
         {
+		//make found =1 such that we know that we found the record
             found=1;color_change(3);
+		//asking user to provide new information to upadte
             printf("\nEnter Fligth ID:");color_change(7);
             scanf("%d",&t.id);
 
@@ -367,9 +407,9 @@ void update_data()
             scanf("%s",t.source);color_change(3);
             printf("\nEnter Flight Destination:");color_change(7);
             scanf("%s",t.destination);color_change(3);
-            printf("\nDo yo want to change day of operation of flight [Y/N]:");
+            printf("\nDo yo want to change day of operation of flight [Y/N]:");//asking user whether they want to change day of opration of fligth or not.
             scanf("%s",val);color_change(7);
-            if(strcmp(val,"Y")==0)
+            if(strcmp(val,"Y")==0)//if yes then change the day of operation
             {color_change(6);
                 printf("\n0-sun,1-mon,2-tue,3-wed,4-thur,5-fri,6-sat ");
                 for(int i=0;i<3;i++)
@@ -378,22 +418,27 @@ void update_data()
                     scanf("%d",&t.date[i]);
                 }
             }
-            fwrite(&t,sizeof(t),1,fp1);
+            fwrite(&t,sizeof(t),1,fp1);//now write the strucutre variable in temporary file
         }
-        else
+        else//if id is not matches with id in flight record then write that record to temporary file
         {
             fwrite(&t,sizeof(t),1,fp1);
         }
     }
+	//close both the files
     fclose(fp);
     fclose(fp1);
 
-    if(found==0)
+    if(found==0)// if record doesnt found then print the message Sorry No Record Found
     {color_change(4);
     printf("Sorry No Record Found\n\n");color_change(7);
     }
     else
     {
+    /* otherwise now again open main file in writing mode and temporary file in reading mode
+       now copy everything from temperary and write it in main file.
+       hence at the end we have updated main file;		
+	   */    
     fp=fopen(fname,"w");
     fp1=fopen("temp.txt","r");
 
@@ -409,6 +454,7 @@ void update_data()
     }
 
     }
+    //close both the file
     fclose(fp);
     fclose(fp1);
 }
@@ -423,20 +469,32 @@ scanf("%c",&rel);
 return (val);
 }
 
+
 void del()
 {
-    FILE *fp,*fp1;
-    struct Flight t,t1;
+    /*      similar fashion like update_date function
+            ask user which flight information he wants to delete from the file and taking coressponding id
+            Main file is open in reading mode and a temperary file is open in 
+            wirting mode.
+            at every iteration write everything to the temperary file until we found the record then if found
+            the matching id then found==1;(or do nothing)
+            then close both the file
+    */	
+    FILE *fp,*fp1;//Declaring two file pointer one for the main file and otther for the temporary file
+    struct Flight t,t1;//declaring two structure valraible one for the main file and otther for the temporary file
     int id,found=0,count=0;
 
-    fp=fopen(fname,"r");
-    fp1=fopen("temp.txt","w");
+    fp=fopen(fname,"r");//opening main file in reading mode
+    fp1=fopen("temp.txt","w");//opeining file in writing mode
     color_change(3);
-    printf("\nEnter the Flight ID you want to Delete:");color_change(7);
+    printf("\nEnter the Flight ID you want to Delete:");//asking user which flight record w.r.t id he/she wants to delete.
+    color_change(7);
     scanf("%d",&id);
-
+    
     while(1)
     {
+	 /* at every iteration write everything to the temperary file until we found the record then if found
+            the matching id then found==1;(or do nothing)*/
         fread(&t,sizeof(t),1,fp);
         if(feof(fp))
         {
@@ -457,11 +515,14 @@ void del()
 
     if(found==0)
     {color_change(4);
-        printf("Sorry No Record Found\n\n");
+        printf("Sorry No Record Found\n\n");//if found = 0 then printing Sorry No Record Found
         color_change(7);
     }
     else
     {
+	    /*otherwise if found is 0 then opein main file in writing mode and temp file in reading mode
+	    and copy evry thing from temp file to main file
+	    */
         fp=fopen(fname,"w");
         fp1=fopen("temp.txt","r");
 
@@ -474,7 +535,7 @@ void del()
             }
             fwrite(&t,sizeof(t),1,fp);
         }
-    }
+    }//close both the files
     fclose(fp);
     fclose(fp1);
 }
@@ -482,25 +543,32 @@ void del()
 
 void search()
 {
-    FILE *fp;
-    struct Flight t;
+	/* User is asked to input the Flight name he/she want to search.
+           then file is open in reading mode and a variable found is maintain equal to zero
+           then at every iteration if filght name and inputed flight name matches then 
+           all information regarding the filght is displayed.
+            and if found is equal to zero then a message is displayed that no record found.
+	*/
+   
+    FILE *fp;//Declaring file pointer
+    struct Flight t;//Declaring strucutre variable to read records from the file
     int found=0;
     char name[20];
 
-    fp=fopen(fname,"r");
+    fp=fopen(fname,"r");//opeining file in reaading mode
 
-    printf("\nEnter the Flight Name:");
+    printf("\nEnter the Flight Name:");//asking flight record w.r.t to flight name to be searched
     scanf("%s",name);
 
     while(1)
     {
-        fread(&t,sizeof(t),1,fp);
+        fread(&t,sizeof(t),1,fp);//reading one flight record at every iteration
 
         if(feof(fp))
         {
-            break;
+            break;//if end of the file then come out of the loop
         }
-        if(strcmp(name,t.name)==0)
+        if(strcmp(name,t.name)==0)//if the flight name matches with filght name is record display all the information of that flight
         {
             color_change(4);
             printf("\n=========================================================================\n\n");
@@ -524,9 +592,9 @@ void search()
     if(found==0)
     {
         color_change(4);
-    printf("\nSorry No Record Found");color_change(7);
+    printf("\nSorry No Record Found");color_change(7);//if record is not found then print Sorry No Record Found
     }
-    fclose(fp);
+    fclose(fp);//close the file
 }
 
 
@@ -707,7 +775,7 @@ struct flags login()
         
       }
 
-
+//to print logo.
 void logo()
 	{
         color_change(4);
