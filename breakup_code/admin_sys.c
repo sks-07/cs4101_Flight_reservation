@@ -1,4 +1,5 @@
-#include "imports.h"
+//Including all files needed to run admin_sys.c 
+#include "imports.h"  
 #ifndef _STRUCT_H
 #include "structs.h"
 #endif
@@ -8,27 +9,31 @@
     #include "color_changer.c"
 #endif
 
-char fname[]="flight.txt";
-void add_data();
-void update_data();
-void display_all();
-void display_all_date_wise();
-void del();
-void search();
-int day_of_week(int d,int m,int y);
-char mygetch();
 
-void book_tickets(char *f1, float distance_fare);
-void reg();
-struct flags login();
-void logo();
+char fname[]="flight.txt";//Declaring the main File in which all filght information is stored.
+//Declaring all the modules for admin system 
+void add_data();// add new flight data to the main txt file
+void update_data();// To update any old flight record 
+void display_all();//To display all the flight records
+void display_all_date_wise();//To display all the flight records on a given date in 2020
+void del();// To delete any old flight record 
+void search();//To search for any Flight record
+int day_of_week(int d,int m,int y);//It provides the day of the week on an given date of 2020(like0-sun,2-mon,...so on)
+char mygetch();//Alternative of getch() for linux system/windows(if conio.h is not included).
 
+void book_tickets(char *f1, float distance_fare);//to book ticket for a current user
+void reg();//For resgistration of new user
+struct flags login();//this structure is used to to detect admin and user login
+void logo();//to print logo
 
+/* some line of code will repeadtedly occur like clrscr() and logo() For clear screen and to print logo	
+   and color_change(number) its is used to change the color of the output in console window
+*/
 int admin_sys()
-{
+{	
     clrscr();
     logo();
-    int user; int selection_flag=0;
+    int user; int selection_flag=0;//intialize selection_flag
     while(selection_flag==0)
     {
         printf("\n\n\t\t\t\tWelcome to MakeMyTrip\n");
@@ -40,13 +45,13 @@ int admin_sys()
     struct flags f;
     if(user==1)
     {
-        f = login();
-        if(f.adminf==1)
+        f = login();//login() function is called
+        if(f.adminf==1)//if admin flag is 1 then only you can acess admin commands/operations. 
         {
             int ch;
             while(1)
             {
-
+		//Admin is given a variety of choices/actions.
                 clrscr();color_change(4);
                 printf("\t\t\tLogin as Admin\n\n");
                 printf("==========================");color_change(2);printf("Flight info System");color_change(4);printf("===========================\n\n");
@@ -62,29 +67,29 @@ int admin_sys()
                 printf("=========================================================================\n\n");color_change(6);
 
                 printf("\nPlease enter your Choice:");color_change(7);
-                scanf("%d",&ch);
-
+                scanf("%d",&ch);//taking input from the admin 
+		//switch cas e is defined on the basis of admin choice folowing cases will wbe executed.	
                 switch(ch)
                 {
-                    case 1: add_data();
+                    case 1: add_data();//if choice is 1 then add_data() function is called
                     break;
 
-                    case 2: update_data();
+                    case 2: update_data();//if choice is 2 then update_data() function is called
                     break;
 
-                    case 3: display_all_date_wise();
+                    case 3: display_all_date_wise();//if choice is 3 then display_all_date_wise() function is called
                     break;
 
-                    case 4: display_all();
+                    case 4: display_all();//if choice is 4 then display_all() function is called
                     break;
 
-                    case 5: del();
+                    case 5: del();//if choice is 1 then del() function is called
                     break;
 
-                    case 6: search();
+                    case 6: search();//if choice is 1 then search() function is called
                     break;
 
-                    case 0: exit(0);
+                    case 0: exit(0);//if choice is 0 then the program will terminate
 
                 }
                 color_change(2);
@@ -94,7 +99,7 @@ int admin_sys()
                 selection_flag=1;
             }
         }
-        else 
+        else //if admin flag is not 1 then you cannot access admin commands/operations
         {
             color_change(4);
             printf("\nInvalid Choice..!!!");
@@ -105,7 +110,7 @@ int admin_sys()
 	    }
 
     }
-    else if(user==2)
+    else if(user==2)//now if the user input choice 2 then you will redirect to user portal
     {   
             int choice, user_login_flag;
             //system("clear");
@@ -113,23 +118,24 @@ int admin_sys()
             logo();
             color_change(5);
             printf("\n\n\t\t\t\t1:");color_change(3);printf(" Registration");color_change(5);printf("\t\t2:");color_change(3);printf(" Login");color_change(7);
-            printf("\n\n\t\t\t\tEnter your choice: ");
+            printf("\n\n\t\t\t\tEnter your choice: ");//asking for choices from user
             scanf("%d",&choice);
-
+	    //if choice is 1 then user is redirected to registration portal	
             if(choice==1)
             {
-                reg();
+                reg();//registration function is called
             }
             else
             {
                 struct flags f2;
                 f2=login();
-                if(f2.userf==1)
+                if(f2.userf==1)//if user flag is 1 then you can access to the users command/operations
                 {
+		    //Declaring and intailizing some variable	
                     char flight_name[30],date1[10];
                     float distance_fare = 2000;
                     int ch;
-                    while(1)
+                    while(1)//the loop will run infintely until user wants to exit 
                 {
                     clrscr();
                     logo();
@@ -141,11 +147,11 @@ int admin_sys()
                     printf("\n=================================================================================================================");
                     color_change(5);
                     printf("\n\n\t\t\t\t1:");color_change(3);printf("Booking");color_change(5);printf("\t\t0");color_change(3);printf(":exit");color_change(7);
-                    printf("\n\n\t\t\t\tPlease enter your Choice: ");
+                    printf("\n\n\t\t\t\tPlease enter your Choice: ");//asking for a valid choice from the users
                     scanf("%d",&ch);
                     switch(ch)
                     {
-                        case 1:
+                        case 1://if choice is 1 then following lines of code will be executed
                                 color_change(2);
                                 printf("\n\t\t\t\tWelcome to booking counter");
                                 color_change(4);
@@ -155,20 +161,21 @@ int admin_sys()
                                 printf("\n\t\tDestination:(KOl,MUM,DEL,BBS,GOA)");
                                 printf("\n-----------------------------------------------------------------------------------------------------------------");
                                 color_change(7);
-                                printf("\n\n\t\t\t\tPress Enter to proceed... ");
+                                printf("\n\n\t\t\t\tPress Enter to proceed... ");//waiting for user to press enter
                                 mygetch();
                                 color_change(3);
-                                printf("\n\t\t\t\tEnter the date to see available Flight");
-                                display_all_date_wise();color_change(7);
+                                printf("\n\t\t\t\tEnter the date to see available Flight");//asking to enter the date from the user
+                                display_all_date_wise();// calling the dasplay date wisefunction to display aall flight on a given date
+				color_change(7);
                                 printf("\n\n\t\t\t\tPress Enter to proceed..");
                                 mygetch();color_change(3);
-                                printf("\n\n\t\t\tEnter date to confirm date (Format: dd-mm):\t\t");color_change(7);
+                                printf("\n\n\t\t\tEnter date to confirm date (Format: dd-mm):\t\t");color_change(7);//confirm the date
                                 scanf("%s",date1);color_change(3);
-                                printf("\n\n\t\t\tEnter the flight name from above availabe flights:\t");color_change(7);
+                                printf("\n\n\t\t\tEnter the flight name from above availabe flights:\t");color_change(7);//enter the flight name from all the available flight
                                 scanf("%s",flight_name);
                                 strcat(flight_name,date1);
-                                strcat(flight_name,".txt");
-                                book_tickets(flight_name, distance_fare);
+                                strcat(flight_name,".txt");//joining the name og the flight name and date to create a separate file for every flight on a given date
+                                book_tickets(flight_name, distance_fare);//calling the booking function
                         break;
 
                         case 0:exit(0);
@@ -201,9 +208,12 @@ int admin_sys()
 
 void add_data()
 {
+    //declaring a file pointer which will run through the file
     FILE *fp;
-    struct Flight f1;
+    struct Flight f1;//declaring structure variable which will help to stored information in text file
+    //opening a the file in appending mode which will write data and the end of the file	
     fp=fopen(fname,"a");color_change(3);
+    //asking user to enter the flight information like id,source,destination,and day of operation of the flight	and stored everything in structure f1 
     printf("\nEnter ID:");color_change(7);
     scanf("%d",&f1.id);color_change(3);
     printf("\nEnter flight name/number :");color_change(7);
@@ -218,50 +228,57 @@ void add_data()
             printf("\nday of operation %d:",i+1);color_change(7);
             scanf("%d",&f1.date[i]);
         }
-    fwrite(&f1,sizeof(f1),1,fp);
+    fwrite(&f1,sizeof(f1),1,fp);//writing  the structure f1 to the file
 
-    fclose(fp);
+    fclose(fp);//closing the file
 }
 
 int day_of_week(int d,int m,int y)
 {
-   //  d    = 6   ; //Day     1-31
-    // m    = 11    ; //Month   1-12`
-    // y    = 2020 ; //Year    2013`
+    /*	In  1990,  Michael  Keith  and  Tom  Craver  published  the  foregoing  expression  that  seeks  to  minimisethe number of keystrokes needed to 
+	enter a self-contained function for converting a Gregorian date into anumerical day of the week.  
+	It preserves neither y nor d, and returns 0 = Sunday, 1 = Monday, etc
+    */
+    // it is like direct formula to calculate the weekday from a given date		
     int weekday  = (d += m < 3 ? y-- : y - 2, 23*m/9 + d + 4 + y/4- y/100 + y/400)%7;
     return weekday;
 }
 
 
+//this function is used to display the flight records on a given date
 void display_all_date_wise()
 {
-    int d,m,y=2020;color_change(3);
+    int d,m,y=2020;//declaring day and month and intializing year =2020  
+    color_change(3);
+    //asking user to provide a date and ,month
     printf("\n\t\t\t\tEnter the date(dd):\t");color_change(7);
     scanf("%d",&d);color_change(3);
     printf("\n\t\t\t\tEnter the month(mm):\t");color_change(7);
     scanf("%d",&m);
-    int n= day_of_week(d,m,y);
+    int n= day_of_week(d,m,y);//calling dayof the week function to know what is the day of the week on that date.
 
+    //Declaring a file pointer	
     FILE *fp;
-    struct Flight t;
+    struct Flight t;//declaring a flight structure which is used to read flight records from the text file
 
-    fp=fopen(fname,"r");
+    fp=fopen(fname,"r");//opeining file in reading mode
     color_change(4);
     printf("\n\t\t\t========================================================\n\n");color_change(2);
     printf("\t\t\t\t\t All flights on %d-%d-%d\n\n",d,m,y);color_change(4);
     printf("\t\t\t========================================================\n\n");color_change(6);
 
     printf("\t\t\tID\t\tName\t\tSource\t\tDestination\n\n\n");color_change(3);
-
+    //the llop will run untill it find the record on a given date and if we reach end of the file	
     while(1)
     {
-        fread(&t,sizeof(t),1,fp);
+        fread(&t,sizeof(t),1,fp);//reading one structure at every iteration
         if(feof(fp))
         {
             break;
         }
         for(int i=0;i<3;i++)
             {
+		//if the date matches with date in flight records then print all such records
                 if(t.date[i]==n)
                     {
                          printf("\t\t\t%d\t\t",t.id);
@@ -274,16 +291,17 @@ void display_all_date_wise()
     }color_change(4);
     printf("\t\t\t========================================================\n\n");color_change(7);
 
-    fclose(fp);
+    fclose(fp);//closing the file
 }
 
 
 void display_all()
 {
+//Declaring a file pointer
 FILE *fp;
-struct Flight t;
+struct Flight t;//declaring a flight structure which is used to read flight records from the text file
 
-fp=fopen(fname,"r");
+fp=fopen(fname,"r");//opeining file in reading mode
 color_change(4);
 printf("\n====================================================================================\n\n");color_change(2);
 printf("\t\t All FLight Details\n\n");color_change(4);
@@ -291,14 +309,15 @@ printf("========================================================================
 
 printf("ID\t\tName\t\tSource\t\tDestination\t\tDay of operation\n\n\n");color_change(3);
 
-while(1)
+while(1)//the loop will until we reach end of the file
 {
-fread(&t,sizeof(t),1,fp);
+fread(&t,sizeof(t),1,fp);// reading one structure variable at every iteration and storing its value in strurture variable t
 
-if(feof(fp))
+if(feof(fp))// if we reach end of the file then go out of the loop
 {
 break;
 }
+//printing all the flight  records stored in t	
 printf("%d\t\t",t.id);
 printf("%s\t\t",t.name);
 printf("%s\t\t",t.source);
@@ -309,7 +328,7 @@ printf("\n\n");
 }color_change(4);
 printf("=======================================================================================\n\n");color_change(7);
 
-fclose(fp);
+fclose(fp);//closing the file
 }
 
 
