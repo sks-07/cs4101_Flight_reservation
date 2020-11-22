@@ -10,9 +10,12 @@
 
 struct passenger_info passenger[5];
 
+
+// Booking portal entrance
 void booking(float total_payment)
 {
 	//color_change(3);
+    // Greet and question strings
     char    greet_1[100] = "Welcome to the Payment Portal";
     char    greet_2[100] = "Please enter your method of payment";
     char    greet_3[100] = "\"0\" for card and \"1\" for net banking: ";
@@ -36,41 +39,46 @@ void booking(float total_payment)
 	printf("\n\n\t\t\t\t%s\n\t\t\t%s", greet_2, greet_3);color_change(7);
 	scanf("%d", &choice);
 
-    
-    switch (choice) {
+    // Sitch choice for card or banking portal
+    switch (choice) { E
+    // Enter details for card
     case 0:
 		check_valid_choice = 1;
         sscanf("Card", "%s", user_payment_details.payment_type);color_change(3);
-        printf("\n\t\t\t\t%s\t",card_call_1);color_change(7);
-        scanf("%s", user_payment_details.payment_card.card_type);color_change(3);
-        printf("\n\t\t\t\t%s\t\t",card_call_2);color_change(7);
-        scanf("%lu",&user_payment_details.payment_card.card_no);color_change(3);
+        printf("\n\t\t\t\t%s\t",card_call_1);color_change(7);				
+        scanf("%s", user_payment_details.payment_card.card_type);color_change(3);	//Ask if Credit or Debit
+        printf("\n\t\t\t\t%s\t\t",card_call_2);color_change(7);				
+        scanf("%lu",&user_payment_details.payment_card.card_no);color_change(3);	//Ask for Card Number
         printf("\n\t\t\t\t%s\t\t\t",card_call_3);color_change(7);
-        scanf("%d",&user_payment_details.payment_card.cvv);color_change(3);
+        scanf("%d",&user_payment_details.payment_card.cvv);color_change(3);		//Ask for CVV
         printf("\n\t\t\t\t%s\t\t",card_call_4);color_change(7);
-        scanf("%d",&user_payment_details.payment_card.expiry_date);color_change(3);
+        scanf("%d",&user_payment_details.payment_card.expiry_date);color_change(3);	//Ask for expiry date
         printf("\n\t\t\t\t%s\t",card_call_5);color_change(7);
-        scanf("%d",&user_payment_details.payment_card.expiry_month);
+        scanf("%d",&user_payment_details.payment_card.expiry_month);			//Ask for expiry month
         
         break;
     
     case 1:
+	// Enter details for netbanking
 		check_valid_choice = 1;
-        sscanf("NetBanking", "%s", user_payment_details.payment_type);color_change(3);
+        sscanf("NetBanking", "%s", user_payment_details.payment_type);color_change(3);	
         printf("\n\t\t\t\t%s\t",bank_call_1);color_change(7);
-        scanf("%s", user_payment_details.payment_net.bank_id);color_change(3);
+        scanf("%s", user_payment_details.payment_net.bank_id);color_change(3);		//Ask for Bank Name
         printf("\n\t\t\t\t%s\t\t",bank_call_2);color_change(7);
-        scanf("%s",user_payment_details.payment_net.bank_name);color_change(3);
+        scanf("%s",user_payment_details.payment_net.bank_name);color_change(3);		//Ask for Bank userID
         printf("\n\t\t\t\t%s\t",bank_call_3);color_change(7);
-        scanf("%s",user_payment_details.payment_net.bank_pass);
+        scanf("%s",user_payment_details.payment_net.bank_pass);				//Ask for Bank Password
         break;
     
     default:
+	// In case invalid choice is selected
 		color_change(6);
         printf("Invalid choice selected... returning back");color_change(7);
         break;
     };} while (check_valid_choice==0);
 	color_change(2);
+	
+	// Final statement saying that payment has been recieved
 	printf("\t\t\t\t%.2f has been paid through %s\n", total_payment ,user_payment_details.payment_type);color_change(7);
 }
 
