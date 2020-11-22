@@ -23,7 +23,7 @@ char mygetch();//Alternative of getch() for linux system/windows(if conio.h is n
 
 void book_tickets(char *f1, float distance_fare);//to book ticket for a current user
 void reg();//For resgistration of new user
-struct flags login();//this structure is used to to detect admin and user login
+struct flags login();//this structure is used to detect admin and user login
 void logo();//to print logo
 
 /* some line of code will repeadtedly occur like clrscr() and logo() For clear screen and to print logo	
@@ -328,7 +328,7 @@ printf("========================================================================
 
 printf("ID\t\tName\t\tSource\t\tDestination\t\tDay of operation\n\n\n");color_change(3);
 
-while(1)//the loop will until we reach end of the file
+while(1)//the loop will run until we reach end of the file
 {
 fread(&t,sizeof(t),1,fp);// reading one structure variable at every iteration and storing its value in strurture variable t
 
@@ -600,43 +600,53 @@ void search()
 
 void reg()
   {
-    FILE *fp;
-    struct flags f3;
-    struct web w,w2;int n;
-    char c, checker[30]; int z=0, valid_username=1;char pass[30]; 
+	/*
+	User registration takes place. Once the user enters a username, it is checked with the existing database.
+	If the username already exists, the user is asked to enter a new username. Once a unique username is input, 
+	it is appended to the file, and the user inputs the password to complete the registration.
+	*/
+    FILE *fp;//Declaring file pointer
+    struct flags f3;//Declaring strucutre flags to detect user and admin login
+    struct web w;//Declaring structure variable which will help to stored information in text file
+    char checker[30]; char pass[30]; //Declaring character variables to input username and password
+    int valid_username=1; //Declaring integer variable to check for uniqueness of username
+    int n;
+    //opening a the file in appending mode which will write data and the end of the file	
     fp=fopen("Web_user.txt","a+");
     color_change(2);
+	
     printf("\n\n\t\t\t\tWELCOME TO REGISTRATION ZONE");
     color_change(4);
-    printf("\n\t\t\t\t=============================");
+    printf("\n====================================================================================");
     color_change(3);
     
     printf("\n\n\t\t\t\tENTER USERNAME: ");
-    scanf("%s",checker);
-      
+    scanf("%s",checker);//Input username from user
+      //The while loop is used to check for uniqueness of the username
      while (!feof(fp))
         {
-          fread(&w,sizeof(w),1,fp);
-          if(!strcmp(checker,w.name))
+          fread(&w,sizeof(w),1,fp); //Reads data from file, using structure variable
+          if(!strcmp(checker,w.name)) //Username input compared with available database
           {
             color_change(4); 
             printf("\n\n\t\t\t\tUSERNAME ALREDY EXISTS\n\n");color_change(7); 
-            valid_username = 0;
+            valid_username = 0; //Username not unique, hence code does not go to the next part
             break;
           }
         }
-    fclose(fp);
-
+    fclose(fp);//Closes file
+     //Once username is unique, the following if-section is executed
     if (valid_username==1)
         {
-            strcpy(w.name,checker);
-            fp=fopen("Web_user.txt","a+");
-            char pw[100];color_change(3);
+            strcpy(w.name,checker);//New username appended to the file
+            fp=fopen("Web_user.txt","a+");//opening a the file in appending mode which will write data and the end of the file
+            char pw[100]; //Character to input password from user
+	    color_change(3);
             printf("\t\t\t\tENTER PASSWORD: ");color_change(7);
             scanf("%s",pw);// get a password
-            strcpy(w.pass,pw);
+            strcpy(w.pass,pw);//Password appended to file
             //int l=strlen(w.pass);
-            fwrite(&w,sizeof(w),1,fp);
+            fwrite(&w,sizeof(w),1,fp);//writes data to fp 
             //fseek( fp, -l, SEEK_CUR );
             //fread(&w2,sizeof(w2),1,fp);
             color_change(6);
@@ -656,7 +666,8 @@ void reg()
             color_change(6);    
             printf("\n\n\t\t\t\tYou are successfully registered");
     };
-    printf("\n\n\t\t\t\tGoing back to Login Portal"); color_change(7);   
+    printf("\n\n\t\t\t\tGoing back to Login Portal"); color_change(7);  
+	 printf("\n====================================================================================");
         /*
         printf("\n\n\t\tTry login to your account??\n\n\t\t  ");
         
@@ -690,36 +701,43 @@ void reg()
 
 struct flags login()
     {
-      FILE *fp;
-      FILE *fu;
-      char c,name[30],pass[30]; int z=0;
-      struct flags f,f1;
+	/*
+	User and Admin Login takes place. Username and password entered is compared with available data obtained
+	from registration. Admins have default username and password
+	*/
+      FILE *fp;//Declaring file pointer
+      char name[30],pass[30]; //Declares character variables to input username and password
+      struct flags f,f1;//Declaring structure flags 
+       //Declaring flags in structure to control admin and user login, depending on whether condition is met
        f.adminf=0;
        f.userf=0;
-   
+       
+      //Declaring interger type variable to compare username and password of user with available database
       int checku=0;
       int checkp=0;
-      
+     //This loop runs as long as either user or admin is not logged in, as the condition in 'while' explicitly mentions
     do
     {
-	clrscr();
-        logo();
+	clrscr();//clears screen
+        logo();//shows logo
+	 //Opens file in reading mode
         fp=fopen("Web_user.txt","r");
         color_change(2);
         printf("\n\n\t\t\t\tWELCOME TO LOGIN ZONE");
         color_change(4);
-        printf("\n\t\t\t\t======================");
+         printf("\n====================================================================================");
         color_change(3);
         printf("\n\n\t\t\t\tENTER USERNAME: ");color_change(7);
-        scanf("%s",name);
+        scanf("%s",name);//Input username
         char pw[100]; // password string pointer
         color_change(3);
         printf("\t\t\t\tENTER PASSWORD: ");color_change(7);
         scanf("%s",pw); // get a password
-      
-        char admin_pass[]   ="root";
-        char admin_u[]      ="admin";
-        if(strcmp(admin_u,name)==0 && strcmp(admin_pass,pw)==0)
+        
+        char admin_pass[]   ="root"; //default admin password
+        char admin_u[]      ="admin"; //default admin username
+	 //compares input admin username and admin password with default admin username and admin password   
+        if(strcmp(admin_u,name)==0 && strcmp(admin_pass,pw)==0) 
           {
               f.adminf=1;color_change(2);
               printf("\n\t\t\tYOU HAVE LOGGED IN SUCCESSFULLY as admin\n");color_change(7);
@@ -727,13 +745,14 @@ struct flags login()
          
      while (!feof(fp))
         {
-          struct web w1;int n;
-          fread(&w1,sizeof(w1),1,fp);
-          checku=strcmp(name,w1.name);
-          checkp=strcmp(pw,w1.pass);
+          struct web w1; //Declaring structure variable which will help to access information from text file created in reg()
+	  int n;
+          fread(&w1,sizeof(w1),1,fp); //Reads data from file, using structure variable
+          checku=strcmp(name,w1.name);//Compares input username with available database
+          checkp=strcmp(pw,w1.pass);//Compares input password with available database
           
           
-        if(checku==0&&checkp==0)
+        if(checku==0&&checkp==0)//When both input username and password match with available data
           {
             f.userf=1;clrscr();
             //printf("\e[1;1H\e[2J"); 
@@ -742,19 +761,21 @@ struct flags login()
             printf("\n\n\n\t\t\t\tWELCOME, HAVE A NICE DAY\n");color_change(7);
             break;
           }
-        else if(checku==0&&checkp!=0)
+        else if(checku==0&&checkp!=0)//When username matches with available data, but password does not. User is directed back to login
           {
               color_change(4);
             printf("\n\n\n\t\t\tWRONG PASSWORD!! Not %s??",name);color_change(6);
             printf("\n\n\t\t\t\t  (Press '1' to re-login)");color_change(7);
             scanf("%d",&n);
+	    printf("\n====================================================================================");
             break;
           }
         }
-     
+        //When input username does not match with available data, user is supposed to register
         if(checku!=0)
           {color_change(6);
            printf("\n\n\n\t\t\tYou are not a Registered User\n \t\t\t");color_change(7);
+	    printf("\n====================================================================================");
            /*printf("\n\n\n\t\t\tDo you want to register?\n \t\t\t");
            printf("\n\n\n\tPress 1 to register, Press 2 to try login again, Press anything else to skip\n");
            scanf("%d",&n);
@@ -766,11 +787,11 @@ struct flags login()
            printf("\n\n\t\t\tThank you for visiting our website. Have a good day\n");*/
            break;
           }
-	   fclose(fp);
+	   fclose(fp);//file is closed
 
          } while (f.adminf==0 && f.userf==0); 	
       
-        return f;
+        return f;//Returns the flag
         
         
       }
