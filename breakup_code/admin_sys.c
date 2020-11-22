@@ -733,6 +733,7 @@ struct flags login()
             color_change(6);
             printf("\n\n\n\t\t\tYOU HAVE LOGGED IN SUCCESSFULLY!!");
             printf("\n\n\n\t\t\t\tWELCOME, HAVE A NICE DAY\n");color_change(7);
+	    printf("\nPress Enter to continue....");mygetch();
             break;
           }
         else if(checku==0&&checkp!=0)//When username matches with available data, but password does not. User is directed back to login
